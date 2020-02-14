@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>test</title>
+</head>
+<body>
+    <h1>api-test</h1>
+    <div id="location"></div>
+    <div id="list"></div>
+</body>
+<script>
+    const $body = document.body;
+
+    const displayLocation = () => {
+        const $location = $body.querySelector('#location');
+        $location.innerHTML = location.href;
+    };
+    displayLocation();
+
+    const fetchListByPost = () => {
+        const $list = $body.querySelector('#list');
+
+        fetch('./api/v1/list', {method: 'post'})
+            .then((response) => response.json())
+            .then((todoList) => {
+                todoList.forEach((item) => {
+                    const {title, done} = item;
+                    const text = `${title} / ${done}`;
+                    const $div = document.createElement('div');
+                    $div.innerHTML = text;
+                    $list.appendChild($div);
+                });
+            });
+    };
+    fetchListByPost();
+
+</script>
+</html>
